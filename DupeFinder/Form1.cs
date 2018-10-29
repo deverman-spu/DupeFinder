@@ -35,7 +35,50 @@ namespace DupeFinder
             return fileList;
         }
 
-        /** Simple method that opens a folder browser dialog then populates our textbox with the value **/
+        /** Simple function that writes our header to our output file **/
+        private void writeHeader()
+        {
+            using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", false))
+            {
+                fileWrite.WriteLine("______                 ______ _           _            ______                _ _       ");
+                fileWrite.WriteLine("|  _  \\                |  ___(_)         | |           | ___ \\              | | |      ");
+                fileWrite.WriteLine("| | | |_   _ _ __   ___| |_   _ _ __   __| | ___ _ __  | |_/ /___  ___ _   _| | |_ ___ ");
+                fileWrite.WriteLine("| | | | | | | '_ \\ / _ \\  _| | | '_ \\ / _` |/ _ \\ '__| |    // _ \\/ __| | | | | __/ __|");
+                fileWrite.WriteLine("| |/ /| |_| | |_) |  __/ |   | | | | | (_| |  __/ |    | |\\ \\  __/\\__ \\ |_| | | |_\\__ \\");
+                fileWrite.WriteLine("|___/  \\__,_| .__/ \\___\\_|   |_|_| |_|\\__,_|\\___|_|    \\_| \\_\\___||___/\\__,_|_|\\__|___/");
+                fileWrite.WriteLine("            | |                                                                        ");
+                fileWrite.WriteLine("            |_|                                                                        ");
+                fileWrite.WriteLine("");
+                fileWrite.Close();
+            }
+        }
+
+        /** Simple function that writes our duplicate file names with parent file to the results file **/
+        private void writeResultWithParent(string parentFile, string dupeFile)
+        {
+            using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
+            {
+                fileWrite.WriteLine("_______________________________________________________________________________________");
+                fileWrite.WriteLine("|--- " + parentFile);
+                fileWrite.WriteLine("|");
+                fileWrite.WriteLine("|------ " + dupeFile);
+                fileWrite.Close();
+            }
+        }
+
+        /** Simple function that writes our duplicate file names without parent file to the results file **/
+        private void writeResultWithoutParent(string dupeFile)
+        {
+            using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
+            {
+                fileWrite.WriteLine("|");
+                fileWrite.WriteLine("|------ " + dupeFile);
+                fileWrite.Close();
+            }
+        }
+
+
+        /** Simple function that opens a folder browser dialog then populates our textbox with the value **/
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
@@ -55,9 +98,12 @@ namespace DupeFinder
             List<string> fileList = new List<string>();
             getFileList(fileList);
 
+            writeHeader();
+
             foreach (string file in fileList)
             {
                 long fileSize = new System.IO.FileInfo(file).Length;
+                bool needParent = true;
 
                 foreach (string checkFile in fileList)
                 {
@@ -65,8 +111,15 @@ namespace DupeFinder
 
                     if ((fileSize == checkFileSize) && (file.Equals(checkFile) == false))
                     {
-                        lblStatus.Text = fileSize + "  -  " + checkFileSize;
-                        MessageBox.Show(file + "\n\n" + checkFile);
+                        if (needParent == true)
+                        {
+                            writeResultWithParent(file, checkFile);
+                            needParent = false;
+                        } else
+                        {
+                            writeResultWithoutParent(checkFile);
+                        }
+                            
                     }
                 }
             }
