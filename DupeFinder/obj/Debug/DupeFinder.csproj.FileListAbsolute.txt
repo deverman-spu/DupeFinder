@@ -1,0 +1,9 @@
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\bin\Debug\DupeFinder.exe.config
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\bin\Debug\DupeFinder.exe
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\bin\Debug\DupeFinder.pdb
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.csprojResolveAssemblyReference.cache
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.Main.resources
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.Properties.Resources.resources
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.csproj.GenerateResource.Cache
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.exe
+c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.pdb
