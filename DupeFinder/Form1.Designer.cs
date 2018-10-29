@@ -104,6 +104,7 @@
             this.btnSelectFolder.TabIndex = 2;
             this.btnSelectFolder.Text = "Select Folder";
             this.btnSelectFolder.UseVisualStyleBackColor = true;
+            this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
             // 
             // btnCompareFiles
             // 
@@ -113,6 +114,7 @@
             this.btnCompareFiles.TabIndex = 3;
             this.btnCompareFiles.Text = "Compare Files";
             this.btnCompareFiles.UseVisualStyleBackColor = true;
+            this.btnCompareFiles.Click += new System.EventHandler(this.btnCompareFiles_Click);
             // 
             // lblStatus
             // 
