@@ -7,3 +7,11 @@ c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\D
 c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.csproj.GenerateResource.Cache
 c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.exe
 c:\users\tatsu\documents\visual studio 2015\Projects\DupeFinder\DupeFinder\obj\Debug\DupeFinder.pdb
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\bin\Debug\DupeFinder.exe.config
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\bin\Debug\DupeFinder.exe
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\bin\Debug\DupeFinder.pdb
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.Main.resources
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.Properties.Resources.resources
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.csproj.GenerateResource.Cache
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.exe
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.pdb
