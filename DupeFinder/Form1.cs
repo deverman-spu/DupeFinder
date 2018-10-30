@@ -1,9 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace DupeFinder
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
             {
-                fileWrite.WriteLine("_______________________________________________________________________________________");
+                fileWrite.WriteLine(" ______________________________________________________________________________________");
                 fileWrite.WriteLine("|--- " + parentFile);
                 fileWrite.WriteLine("|");
                 fileWrite.WriteLine("|------ " + dupeFile);
@@ -87,6 +88,40 @@ namespace DupeFinder
             }
         }
 
+        /** This function will compute the MD5 hash of the specified file and save it in a byte array.
+         * 
+         *  This function is only called if we have already determined that the file sizes are equal.
+         **/
+        private byte[] getMD5(string file)
+        {
+            MD5 hashMD5 = MD5.Create();
+
+            using (FileStream fileStream = File.OpenRead(file))
+            {
+                return hashMD5.ComputeHash(fileStream);
+            }
+        }
+
+        /** This function will compare the MD5 hashes of two files and return true if they are equal. **/
+        private bool compareMD5(string file, string checkFile)
+        {
+            byte[] fileMD5 = getMD5(file);
+            byte[] checkFileMD5 = getMD5(checkFile);
+
+            if (fileMD5.Length == checkFileMD5.Length)
+            {
+                for (int i = 0; i < fileMD5.Length; i++)
+                {
+                    if (fileMD5[i] != checkFileMD5[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
         /** This function will create a generic list, populate that list with all files in the specified folder,
          *  then loop through each file comparing it to all of the other files based on file length in bytes.
          *  
@@ -95,6 +130,8 @@ namespace DupeFinder
          **/
         private void btnCompareFiles_Click(object sender, EventArgs e)
         {
+            lblStatus.Text = "Scanning...";
+
             List<string> fileList = new List<string>();
             getFileList(fileList);
 
@@ -111,18 +148,22 @@ namespace DupeFinder
 
                     if ((fileSize == checkFileSize) && (file.Equals(checkFile) == false))
                     {
-                        if (needParent == true)
+                        if (compareMD5(file, checkFile) == true)
                         {
-                            writeResultWithParent(file, checkFile);
-                            needParent = false;
-                        } else
-                        {
-                            writeResultWithoutParent(checkFile);
+                            if (needParent == true)
+                            {
+                                writeResultWithParent(file, checkFile);
+                                needParent = false;
+                            }
+                            else
+                            {
+                                writeResultWithoutParent(checkFile);
+                            }
                         }
-                            
                     }
                 }
             }
+            lblStatus.Text = "Finished!";
         }
     }
 }
