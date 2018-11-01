@@ -105,6 +105,28 @@ namespace DupeFinder
             }
             return false;
         }
+
+        /** This function will compare the files byte-by-byte and return true if they are equal **/
+        private bool CompareBytes(string file, string checkFile)
+        {
+            FileInfo fileInfo = new FileInfo(file);
+            FileInfo checkFileInfo = new FileInfo(file);
+
+            using (FileStream fsFile = fileInfo.OpenRead())
+            using (FileStream fsCheckFile = checkFileInfo.OpenRead())
+            using (BufferedStream bsFile = new BufferedStream(fsFile))
+            using (BufferedStream bsCheckFile = new BufferedStream(fsCheckFile))
+            {
+                for (int i = 0; i < fileInfo.Length; i++)
+                {
+                    if (bsFile.ReadByte() != bsCheckFile.ReadByte())
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
    
         /** This function populates our results form with the results from the file and shows the form **/
         private void ShowResults(string message)
