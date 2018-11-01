@@ -105,6 +105,14 @@ namespace DupeFinder
             }
             return false;
         }
+   
+        /** This function populates our results form with the results from the file and shows the form **/
+        private void ShowResults(string message)
+        {
+            Results resultForm = new Results();
+            resultForm.RichTextBoxValue = message;
+            resultForm.ShowDialog();
+        }
 
         /** Simple function that opens a folder browser dialog then populates our textbox with the value **/
         private void btnSelectFolder_Click(object sender, EventArgs e)
@@ -157,6 +165,7 @@ namespace DupeFinder
                 }
             }
             lblStatus.Text = "Finished!";
+            ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
         }
 
         /** Exits the application **/

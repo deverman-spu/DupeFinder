@@ -16,5 +16,18 @@ namespace DupeFinder
         {
             InitializeComponent();
         }
+
+        /** Getter and setter for our results rich text box **/
+        public string RichTextBoxValue
+        {
+            get
+            {
+                return rtbResults.Text;
+            }
+            set
+            {
+                rtbResults.Text = value;
+            }
+        }
     }
 }
