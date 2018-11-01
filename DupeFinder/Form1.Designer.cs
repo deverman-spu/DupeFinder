@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainMenu = new System.Windows.Forms.MenuStrip();
+            this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.fdbMain = new System.Windows.Forms.FolderBrowserDialog();
             this.txtFolderPath = new System.Windows.Forms.TextBox();
             this.btnSelectFolder = new System.Windows.Forms.Button();
             this.btnCompareFiles = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.mainMenu.SuspendLayout();
+            this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mainMenu
+            // mnuMain
             // 
-            this.mainMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMain.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.mainMenu.Location = new System.Drawing.Point(0, 0);
-            this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.mainMenu.Size = new System.Drawing.Size(484, 24);
-            this.mainMenu.TabIndex = 0;
-            this.mainMenu.Text = "mainMenu";
+            this.mnuMain.Location = new System.Drawing.Point(0, 0);
+            this.mnuMain.Name = "mnuMain";
+            this.mnuMain.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
+            this.mnuMain.Size = new System.Drawing.Size(484, 24);
+            this.mnuMain.TabIndex = 0;
+            this.mnuMain.Text = "mainMenu";
             // 
             // fileToolStripMenuItem
             // 
@@ -66,9 +66,10 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -85,9 +86,9 @@
             this.comingToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.comingToolStripMenuItem.Text = "Coming...";
             // 
-            // folderBrowserDialog
+            // fdbMain
             // 
-            this.folderBrowserDialog.ShowNewFolderButton = false;
+            this.fdbMain.ShowNewFolderButton = false;
             // 
             // txtFolderPath
             // 
@@ -133,13 +134,13 @@
             this.Controls.Add(this.btnCompareFiles);
             this.Controls.Add(this.btnSelectFolder);
             this.Controls.Add(this.txtFolderPath);
-            this.Controls.Add(this.mainMenu);
-            this.MainMenuStrip = this.mainMenu;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Controls.Add(this.mnuMain);
+            this.MainMenuStrip = this.mnuMain;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Main";
             this.Text = "DupeFinder";
-            this.mainMenu.ResumeLayout(false);
-            this.mainMenu.PerformLayout();
+            this.mnuMain.ResumeLayout(false);
+            this.mnuMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,12 +148,12 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip mainMenu;
+        private System.Windows.Forms.MenuStrip mnuMain;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comingToolStripMenuItem;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.FolderBrowserDialog fdbMain;
         private System.Windows.Forms.TextBox txtFolderPath;
         private System.Windows.Forms.Button btnSelectFolder;
         private System.Windows.Forms.Button btnCompareFiles;

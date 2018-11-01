@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Security.Cryptography;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DupeFinder
@@ -23,7 +17,7 @@ namespace DupeFinder
          *  prefixing the filename with the filepath. It then returns this generic list to the
          *  calling function.
          **/
-        private List<string> getFileList(List<string> fileList)
+        private List<string> GetFileList(List<string> fileList)
         {
             DirectoryInfo dir = new DirectoryInfo(txtFolderPath.Text);
             FileInfo[] dirFiles = dir.GetFiles("*.*");
@@ -37,7 +31,7 @@ namespace DupeFinder
         }
 
         /** Simple function that writes our header to our output file **/
-        private void writeHeader()
+        private void WriteHeader()
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", false))
             {
@@ -55,7 +49,7 @@ namespace DupeFinder
         }
 
         /** Simple function that writes our duplicate file names with parent file to the results file **/
-        private void writeResultWithParent(string parentFile, string dupeFile)
+        private void WriteResultWithParent(string parentFile, string dupeFile)
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
             {
@@ -68,7 +62,7 @@ namespace DupeFinder
         }
 
         /** Simple function that writes our duplicate file names without parent file to the results file **/
-        private void writeResultWithoutParent(string dupeFile)
+        private void WriteResultWithoutParent(string dupeFile)
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
             {
@@ -78,21 +72,11 @@ namespace DupeFinder
             }
         }
 
-
-        /** Simple function that opens a folder browser dialog then populates our textbox with the value **/
-        private void btnSelectFolder_Click(object sender, EventArgs e)
-        {
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                txtFolderPath.Text = folderBrowserDialog.SelectedPath;
-            }
-        }
-
         /** This function will compute the MD5 hash of the specified file and save it in a byte array.
          * 
          *  This function is only called if we have already determined that the file sizes are equal.
          **/
-        private byte[] getMD5(string file)
+        private byte[] GetMD5(string file)
         {
             MD5 hashMD5 = MD5.Create();
 
@@ -103,10 +87,10 @@ namespace DupeFinder
         }
 
         /** This function will compare the MD5 hashes of two files and return true if they are equal. **/
-        private bool compareMD5(string file, string checkFile)
+        private bool CompareMD5(string file, string checkFile)
         {
-            byte[] fileMD5 = getMD5(file);
-            byte[] checkFileMD5 = getMD5(checkFile);
+            byte[] fileMD5 = GetMD5(file);
+            byte[] checkFileMD5 = GetMD5(checkFile);
 
             if (fileMD5.Length == checkFileMD5.Length)
             {
@@ -122,6 +106,15 @@ namespace DupeFinder
             return false;
         }
 
+        /** Simple function that opens a folder browser dialog then populates our textbox with the value **/
+        private void btnSelectFolder_Click(object sender, EventArgs e)
+        {
+            if (fdbMain.ShowDialog() == DialogResult.OK)
+            {
+                txtFolderPath.Text = fdbMain.SelectedPath;
+            }
+        }
+
         /** This function will create a generic list, populate that list with all files in the specified folder,
          *  then loop through each file comparing it to all of the other files based on file length in bytes.
          *  
@@ -133,9 +126,9 @@ namespace DupeFinder
             lblStatus.Text = "Scanning...";
 
             List<string> fileList = new List<string>();
-            getFileList(fileList);
+            GetFileList(fileList);
 
-            writeHeader();
+            WriteHeader();
 
             foreach (string file in fileList)
             {
@@ -148,22 +141,28 @@ namespace DupeFinder
 
                     if ((fileSize == checkFileSize) && (file.Equals(checkFile) == false))
                     {
-                        if (compareMD5(file, checkFile) == true)
+                        if (CompareMD5(file, checkFile) == true)
                         {
                             if (needParent == true)
                             {
-                                writeResultWithParent(file, checkFile);
+                                WriteResultWithParent(file, checkFile);
                                 needParent = false;
                             }
                             else
                             {
-                                writeResultWithoutParent(checkFile);
+                                WriteResultWithoutParent(checkFile);
                             }
                         }
                     }
                 }
             }
             lblStatus.Text = "Finished!";
+        }
+
+        /** Exits the application **/
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
         }
     }
 }
