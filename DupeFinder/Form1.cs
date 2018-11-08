@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Security.Cryptography;
 using System.IO;
 using System.Windows.Forms;
@@ -8,9 +9,14 @@ namespace DupeFinder
 {
     public partial class Main : Form
     {
+        /** Generic list to hold all of our files with their paths **/
+        List<string> fileList = new List<string>();
+
         public Main()
         {
             InitializeComponent();
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.WorkerSupportsCancellation = true;
         }
 
         /** Writes our header to our output file **/
@@ -127,22 +133,23 @@ namespace DupeFinder
             }
         }
 
-        /** Driver function that initiates the file scanning and duplicate detection **/
-        private void btnCompareFiles_Click(object sender, EventArgs e)
+        /** Background worker function that drives our comparisons **/
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            lblStatus.Text = "";
+            BackgroundWorker worker = sender as BackgroundWorker;
+            int totalFiles = 0;
+            int currentFile = 1;
+            fileList.Clear();
 
-            List<string> fileList = new List<string>();
             foreach (string file in Directory.EnumerateFiles(txtFolderPath.Text, "*.*", SearchOption.AllDirectories))
             {
                 fileList.Add(file);
             }
 
-            WriteHeader();
+            totalFiles = fileList.Count;
 
             foreach (string file in fileList)
             {
-                lblStatus.Text = "Checking " + file;
                 long fileSize = new System.IO.FileInfo(file).Length;
                 bool needParent = true;
 
@@ -166,9 +173,54 @@ namespace DupeFinder
                         }
                     }
                 }
+                if(worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    worker.ReportProgress((int)Math.Floor((((double)currentFile / (double)totalFiles) * 100)));
+                    currentFile++;
+                }
             }
-            lblStatus.Text = "Finished!";
-            ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
+        }
+
+        /** Updates the progress of the scan **/
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            lblStatus.Text = (e.ProgressPercentage.ToString() + "%");
+        }
+
+        /** Updates label based on the result of the scan **/
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                lblStatus.Text = "Canceled!";
+                ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
+            }
+            else if (e.Error != null)
+            {
+                lblStatus.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                lblStatus.Text = "Finished!";
+                ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
+            }
+        }
+
+        /** Driver function that initiates calls to the other functions **/
+        private void btnCompareFiles_Click(object sender, EventArgs e)
+        {
+            lblStatus.Text = "";
+            WriteHeader();
+            
+            if (backgroundWorker1.IsBusy != true)
+            {
+                backgroundWorker1.RunWorkerAsync();
+            }
         }
 
         /** Exits the application **/
