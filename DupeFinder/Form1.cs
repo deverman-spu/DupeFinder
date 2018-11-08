@@ -42,7 +42,7 @@ namespace DupeFinder
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
             {
-                fileWrite.WriteLine(" ______________________________________________________________________________________");
+                fileWrite.WriteLine(" ____________________________________________________________________________________________________________________________________________________________________________________________");
                 fileWrite.WriteLine("|--- " + parentFile);
                 fileWrite.WriteLine("|");
                 fileWrite.WriteLine("|------ " + dupeFile);
