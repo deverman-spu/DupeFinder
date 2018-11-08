@@ -137,6 +137,7 @@ namespace DupeFinder
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            List<string> alreadyChecked = new List<string>();
             int totalFiles = 0;
             int currentFile = 1;
             fileList.Clear();
@@ -157,18 +158,23 @@ namespace DupeFinder
                 {
                     long checkFileSize = new System.IO.FileInfo(checkFile).Length;
 
-                    if ((fileSize == checkFileSize) && (file.Equals(checkFile) == false))
-                    {
-                        if (CompareBytes(file, checkFile) == true)
+                    if (alreadyChecked.Contains(file) == false)
+                    { 
+                        if ((fileSize == checkFileSize) && (file.Equals(checkFile) == false))
                         {
-                            if (needParent == true)
+                            if (CompareBytes(file, checkFile) == true)
                             {
-                                WriteResultWithParent(file, checkFile);
-                                needParent = false;
-                            }
-                            else
-                            {
-                                WriteResultWithoutParent(checkFile);
+                                if (needParent == true)
+                                {
+                                    WriteResultWithParent(file, checkFile);
+                                    alreadyChecked.Add(checkFile);
+                                    needParent = false;
+                                }
+                                else
+                                {
+                                    WriteResultWithoutParent(checkFile);
+                                    alreadyChecked.Add(checkFile);
+                                }
                             }
                         }
                     }
