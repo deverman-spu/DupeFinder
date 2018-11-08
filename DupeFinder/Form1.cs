@@ -125,7 +125,7 @@ namespace DupeFinder
         /** Opens a folder browser dialog then populates our textbox with the value **/
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
-            lblStatus.Text = "";
+            lblCurrentFile.Text = "";
 
             if (fdbMain.ShowDialog() == DialogResult.OK)
             {
@@ -180,7 +180,7 @@ namespace DupeFinder
                 }
                 else
                 {
-                    worker.ReportProgress((int)Math.Floor((((double)currentFile / (double)totalFiles) * 100)));
+                    worker.ReportProgress((int)Math.Floor((((double)currentFile / (double)totalFiles) * 100)), file);
                     currentFile++;
                 }
             }
@@ -189,32 +189,60 @@ namespace DupeFinder
         /** Updates the progress of the scan **/
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            lblStatus.Text = (e.ProgressPercentage.ToString() + "%");
+            this.progressBar1.Value = e.ProgressPercentage;
+            string file = e.UserState.ToString();
+
+            if (file.Length > 67)
+            {
+                file = file.Substring(0, file.IndexOf('\\', file.IndexOf('\\') + 1) + 1) + "..." + file.Substring(file.Substring(0, file.LastIndexOf("\\")).LastIndexOf("\\")); ;
+            }
+    
+            lblCurrentFile.Text = (file);
         }
 
         /** Updates label based on the result of the scan **/
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            btnCompareFiles.Enabled = true;
+            btnCancel.Enabled = false;
+
             if (e.Cancelled == true)
             {
-                lblStatus.Text = "Canceled!";
+                lblStatus.Text = "";
+                lblCurrentFile.Text = "Canceled!";
                 ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
             }
             else if (e.Error != null)
             {
-                lblStatus.Text = "Error: " + e.Error.Message;
+                lblStatus.Text = "";
+                lblCurrentFile.Text = "Error: " + e.Error.Message;
             }
             else
             {
-                lblStatus.Text = "Finished!";
+                lblStatus.Text = "";
+                lblCurrentFile.Text = "Finished!";
                 ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
+            }
+        }
+
+        /** Cancel the async background worker **/
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnCancel.Enabled = false;
+
+            if (backgroundWorker1.WorkerSupportsCancellation == true)
+            {
+                backgroundWorker1.CancelAsync();
             }
         }
 
         /** Driver function that initiates calls to the other functions **/
         private void btnCompareFiles_Click(object sender, EventArgs e)
         {
-            lblStatus.Text = "";
+            btnCancel.Enabled = true;
+            btnCompareFiles.Enabled = false;
+            lblCurrentFile.Text = "";
+            lblStatus.Text = "Current File:";
             WriteHeader();
             
             if (backgroundWorker1.IsBusy != true)

@@ -37,8 +37,11 @@
             this.txtFolderPath = new System.Windows.Forms.TextBox();
             this.btnSelectFolder = new System.Windows.Forms.Button();
             this.btnCompareFiles = new System.Windows.Forms.Button();
-            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblCurrentFile = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +54,7 @@
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.mnuMain.Size = new System.Drawing.Size(484, 24);
+            this.mnuMain.Size = new System.Drawing.Size(584, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "mainMenu";
             // 
@@ -93,15 +96,15 @@
             // 
             // txtFolderPath
             // 
-            this.txtFolderPath.Location = new System.Drawing.Point(12, 57);
+            this.txtFolderPath.Location = new System.Drawing.Point(15, 55);
             this.txtFolderPath.Name = "txtFolderPath";
             this.txtFolderPath.ReadOnly = true;
-            this.txtFolderPath.Size = new System.Drawing.Size(333, 20);
+            this.txtFolderPath.Size = new System.Drawing.Size(410, 20);
             this.txtFolderPath.TabIndex = 1;
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(364, 55);
+            this.btnSelectFolder.Location = new System.Drawing.Point(466, 55);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(90, 23);
             this.btnSelectFolder.TabIndex = 2;
@@ -111,7 +114,7 @@
             // 
             // btnCompareFiles
             // 
-            this.btnCompareFiles.Location = new System.Drawing.Point(364, 116);
+            this.btnCompareFiles.Location = new System.Drawing.Point(466, 165);
             this.btnCompareFiles.Name = "btnCompareFiles";
             this.btnCompareFiles.Size = new System.Drawing.Size(90, 23);
             this.btnCompareFiles.TabIndex = 3;
@@ -119,13 +122,13 @@
             this.btnCompareFiles.UseVisualStyleBackColor = true;
             this.btnCompareFiles.Click += new System.EventHandler(this.btnCompareFiles_Click);
             // 
-            // lblStatus
+            // lblCurrentFile
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(12, 121);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 13);
-            this.lblStatus.TabIndex = 4;
+            this.lblCurrentFile.Location = new System.Drawing.Point(15, 120);
+            this.lblCurrentFile.Name = "lblCurrentFile";
+            this.lblCurrentFile.Size = new System.Drawing.Size(410, 23);
+            this.lblCurrentFile.TabIndex = 4;
+            this.lblCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // backgroundWorker1
             // 
@@ -135,12 +138,42 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(15, 165);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(410, 23);
+            this.progressBar1.TabIndex = 5;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Enabled = false;
+            this.btnCancel.Location = new System.Drawing.Point(466, 120);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(90, 23);
+            this.btnCancel.TabIndex = 6;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoEllipsis = true;
+            this.lblStatus.Location = new System.Drawing.Point(15, 90);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(333, 23);
+            this.lblStatus.TabIndex = 7;
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 161);
+            this.ClientSize = new System.Drawing.Size(584, 211);
             this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.lblCurrentFile);
             this.Controls.Add(this.btnCompareFiles);
             this.Controls.Add(this.btnSelectFolder);
             this.Controls.Add(this.txtFolderPath);
@@ -167,8 +200,11 @@
         private System.Windows.Forms.TextBox txtFolderPath;
         private System.Windows.Forms.Button btnSelectFolder;
         private System.Windows.Forms.Button btnCompareFiles;
-        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label lblCurrentFile;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 
