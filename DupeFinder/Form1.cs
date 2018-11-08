@@ -13,24 +13,7 @@ namespace DupeFinder
             InitializeComponent();
         }
 
-        /** This function just populates the generic list with all files in the given folder
-         *  prefixing the filename with the filepath. It then returns this generic list to the
-         *  calling function.
-         **/
-        private List<string> GetFileList(List<string> fileList)
-        {
-            DirectoryInfo dir = new DirectoryInfo(txtFolderPath.Text);
-            FileInfo[] dirFiles = dir.GetFiles("*.*");
-
-            foreach (FileInfo file in dirFiles)
-            {
-                fileList.Add(txtFolderPath.Text + "\\" +  file.Name);
-            }
-
-            return fileList;
-        }
-
-        /** Simple function that writes our header to our output file **/
+        /** Writes our header to our output file **/
         private void WriteHeader()
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", false))
@@ -48,7 +31,7 @@ namespace DupeFinder
             }
         }
 
-        /** Simple function that writes our duplicate file names with parent file to the results file **/
+        /** Writes our duplicate file names with parent file to the results file **/
         private void WriteResultWithParent(string parentFile, string dupeFile)
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
@@ -61,7 +44,7 @@ namespace DupeFinder
             }
         }
 
-        /** Simple function that writes our duplicate file names without parent file to the results file **/
+        /** Writes our duplicate file names without parent file to the results file **/
         private void WriteResultWithoutParent(string dupeFile)
         {
             using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
@@ -72,10 +55,7 @@ namespace DupeFinder
             }
         }
 
-        /** This function will compute the MD5 hash of the specified file and save it in a byte array.
-         * 
-         *  This function is only called if we have already determined that the file sizes are equal.
-         **/
+        /** Computes the MD5 hash of the specified file and save it in a byte array. **/
         private byte[] GetMD5(string file)
         {
             MD5 hashMD5 = MD5.Create();
@@ -86,7 +66,7 @@ namespace DupeFinder
             }
         }
 
-        /** This function will compare the MD5 hashes of two files and return true if they are equal. **/
+        /** Compares the MD5 hashes of two files and return true if they are equal. **/
         private bool CompareMD5(string file, string checkFile)
         {
             byte[] fileMD5 = GetMD5(file);
@@ -106,7 +86,7 @@ namespace DupeFinder
             return false;
         }
 
-        /** This function will compare the files byte-by-byte and return true if they are equal **/
+        /** Compares the files byte-by-byte and return true if they are equal **/
         private bool CompareBytes(string file, string checkFile)
         {
             FileInfo fileInfo = new FileInfo(file);
@@ -128,7 +108,7 @@ namespace DupeFinder
             return true;
         }
    
-        /** This function populates our results form with the results from the file and shows the form **/
+        /** Populates our results form with the results from the file and shows the form **/
         private void ShowResults(string message)
         {
             Results resultForm = new Results();
@@ -136,7 +116,7 @@ namespace DupeFinder
             resultForm.ShowDialog();
         }
 
-        /** Simple function that opens a folder browser dialog then populates our textbox with the value **/
+        /** Opens a folder browser dialog then populates our textbox with the value **/
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
             if (fdbMain.ShowDialog() == DialogResult.OK)
@@ -145,18 +125,16 @@ namespace DupeFinder
             }
         }
 
-        /** This function will create a generic list, populate that list with all files in the specified folder,
-         *  then loop through each file comparing it to all of the other files based on file length in bytes.
-         *  
-         *  We only consider the files equal if the length in bytes is the same and the name is different. 
-         *  (We already know that the file is equal to itself)
-         **/
+        /** Driver function that initiates the file scanning and duplicate detection **/
         private void btnCompareFiles_Click(object sender, EventArgs e)
         {
-            lblStatus.Text = "Scanning...";
+            lblStatus.Text = "";
 
             List<string> fileList = new List<string>();
-            GetFileList(fileList);
+            foreach (string file in Directory.EnumerateFiles(txtFolderPath.Text, "*.*", SearchOption.AllDirectories))
+            {
+                fileList.Add(file);
+            }
 
             WriteHeader();
 

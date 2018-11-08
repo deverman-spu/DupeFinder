@@ -16,3 +16,4 @@ C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\bin\Debug\DupeFinder.exe
 C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\bin\Debug\DupeFinder.pdb
 C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.exe
 C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.pdb
+C:\Users\Tatsu\Documents\GitHub\DupeFinder\DupeFinder\obj\Debug\DupeFinder.csprojResolveAssemblyReference.cache
