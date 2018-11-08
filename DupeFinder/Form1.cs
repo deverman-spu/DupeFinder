@@ -90,7 +90,7 @@ namespace DupeFinder
         private bool CompareBytes(string file, string checkFile)
         {
             FileInfo fileInfo = new FileInfo(file);
-            FileInfo checkFileInfo = new FileInfo(file);
+            FileInfo checkFileInfo = new FileInfo(checkFile);
 
             using (FileStream fsFile = fileInfo.OpenRead())
             using (FileStream fsCheckFile = checkFileInfo.OpenRead())
@@ -119,6 +119,8 @@ namespace DupeFinder
         /** Opens a folder browser dialog then populates our textbox with the value **/
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
+            lblStatus.Text = "";
+
             if (fdbMain.ShowDialog() == DialogResult.OK)
             {
                 txtFolderPath.Text = fdbMain.SelectedPath;
@@ -140,6 +142,7 @@ namespace DupeFinder
 
             foreach (string file in fileList)
             {
+                lblStatus.Text = "Checking " + file;
                 long fileSize = new System.IO.FileInfo(file).Length;
                 bool needParent = true;
 
@@ -149,7 +152,7 @@ namespace DupeFinder
 
                     if ((fileSize == checkFileSize) && (file.Equals(checkFile) == false))
                     {
-                        if (CompareMD5(file, checkFile) == true)
+                        if (CompareBytes(file, checkFile) == true)
                         {
                             if (needParent == true)
                             {
