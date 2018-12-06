@@ -42,6 +42,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.tempTreeView = new System.Windows.Forms.TreeView();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,11 +166,21 @@
             this.lblStatus.TabIndex = 7;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // tempTreeView
+            // 
+            this.tempTreeView.Location = new System.Drawing.Point(546, 194);
+            this.tempTreeView.Name = "tempTreeView";
+            this.tempTreeView.Size = new System.Drawing.Size(10, 10);
+            this.tempTreeView.TabIndex = 9;
+            this.tempTreeView.TabStop = false;
+            this.tempTreeView.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 211);
+            this.ClientSize = new System.Drawing.Size(584, 222);
+            this.Controls.Add(this.tempTreeView);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.progressBar1);
@@ -205,6 +216,7 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.TreeView tempTreeView;
     }
 }
 

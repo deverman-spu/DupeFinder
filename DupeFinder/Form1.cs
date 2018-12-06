@@ -12,53 +12,14 @@ namespace DupeFinder
         /** Generic list to hold all of our files with their paths **/
         List<string> fileList = new List<string>();
 
+        /** Create instance of our results form so we can send data to it **/
+        Results resultForm = new Results();
+
         public Main()
         {
             InitializeComponent();
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
-        }
-
-        /** Writes our header to our output file **/
-        private void WriteHeader()
-        {
-            using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", false))
-            {
-                fileWrite.WriteLine("______                 ______ _           _            ______                _ _       ");
-                fileWrite.WriteLine("|  _  \\                |  ___(_)         | |           | ___ \\              | | |      ");
-                fileWrite.WriteLine("| | | |_   _ _ __   ___| |_   _ _ __   __| | ___ _ __  | |_/ /___  ___ _   _| | |_ ___ ");
-                fileWrite.WriteLine("| | | | | | | '_ \\ / _ \\  _| | | '_ \\ / _` |/ _ \\ '__| |    // _ \\/ __| | | | | __/ __|");
-                fileWrite.WriteLine("| |/ /| |_| | |_) |  __/ |   | | | | | (_| |  __/ |    | |\\ \\  __/\\__ \\ |_| | | |_\\__ \\");
-                fileWrite.WriteLine("|___/  \\__,_| .__/ \\___\\_|   |_|_| |_|\\__,_|\\___|_|    \\_| \\_\\___||___/\\__,_|_|\\__|___/");
-                fileWrite.WriteLine("            | |                                                                        ");
-                fileWrite.WriteLine("            |_|                                                                        ");
-                fileWrite.WriteLine("");
-                fileWrite.Close();
-            }
-        }
-
-        /** Writes our duplicate file names with parent file to the results file **/
-        private void WriteResultWithParent(string parentFile, string dupeFile)
-        {
-            using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
-            {
-                fileWrite.WriteLine(" ____________________________________________________________________________________________________________________________________________________________________________________________");
-                fileWrite.WriteLine("|--- " + parentFile);
-                fileWrite.WriteLine("|");
-                fileWrite.WriteLine("|------ " + dupeFile);
-                fileWrite.Close();
-            }
-        }
-
-        /** Writes our duplicate file names without parent file to the results file **/
-        private void WriteResultWithoutParent(string dupeFile)
-        {
-            using (var fileWrite = new StreamWriter(txtFolderPath.Text + "\\results.txt", true))
-            {
-                fileWrite.WriteLine("|");
-                fileWrite.WriteLine("|------ " + dupeFile);
-                fileWrite.Close();
-            }
         }
 
         /** Computes the MD5 hash of the specified file and save it in a byte array. **/
@@ -115,11 +76,10 @@ namespace DupeFinder
         }
    
         /** Populates our results form with the results from the file and shows the form **/
-        private void ShowResults(string message)
+        private void ShowResults()
         {
-            Results resultForm = new Results();
-            resultForm.RichTextBoxValue = message;
-            resultForm.ShowDialog();
+                resultForm.StartPosition = FormStartPosition.CenterParent;
+                resultForm.ShowDialog();
         }
 
         /** Opens a folder browser dialog then populates our textbox with the value **/
@@ -153,10 +113,12 @@ namespace DupeFinder
             {
                 long fileSize = new System.IO.FileInfo(file).Length;
                 bool needParent = true;
+                TreeNode parentNode = new TreeNode(file);
 
                 foreach (string checkFile in fileList)
                 {
                     long checkFileSize = new System.IO.FileInfo(checkFile).Length;
+                    TreeNode childNode = new TreeNode(checkFile);
 
                     if (alreadyChecked.Contains(file) == false)
                     { 
@@ -166,19 +128,22 @@ namespace DupeFinder
                             {
                                 if (needParent == true)
                                 {
-                                    WriteResultWithParent(file, checkFile);
-                                    alreadyChecked.Add(checkFile);
+                                    tempTreeView.Nodes.Add(parentNode);
                                     needParent = false;
                                 }
-                                else
+
+                                tempTreeView.SelectedNode = parentNode;
+
+                                if (tempTreeView.SelectedNode != null)
                                 {
-                                    WriteResultWithoutParent(checkFile);
+                                    tempTreeView.SelectedNode.Nodes.Add(childNode);
                                     alreadyChecked.Add(checkFile);
                                 }
                             }
                         }
                     }
                 }
+
                 if(worker.CancellationPending == true)
                 {
                     e.Cancel = true;
@@ -186,7 +151,7 @@ namespace DupeFinder
                 }
                 else
                 {
-                    worker.ReportProgress((int)Math.Floor((((double)currentFile / (double)totalFiles) * 100)), file);
+                    worker.ReportProgress((int)Math.Floor((((double)currentFile / (double)totalFiles) * 100)), new Tuple<string, TreeView>(file, tempTreeView));
                     currentFile++;
                 }
             }
@@ -196,14 +161,43 @@ namespace DupeFinder
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             this.progressBar1.Value = e.ProgressPercentage;
-            string file = e.UserState.ToString();
+            string currentFile = "";
 
-            if (file.Length > 67)
+            var args = (Tuple<string, TreeView>)e.UserState;
+            string file = args.Item1;
+            TreeView tempTreeView = args.Item2;
+            
+
+            if (fileList.IndexOf(file) < fileList.Count - 1)
             {
-                file = file.Substring(0, file.IndexOf('\\', file.IndexOf('\\') + 1) + 1) + "..." + file.Substring(file.Substring(0, file.LastIndexOf("\\")).LastIndexOf("\\")); ;
+                currentFile = fileList[fileList.IndexOf(file) + 1];
+            }
+            else
+            {
+                currentFile = file;
+            }
+
+            if (currentFile.Length > 67)
+            {
+                currentFile = currentFile.Substring(0, currentFile.IndexOf('\\', currentFile.IndexOf('\\') + 1) + 1) + "..." + currentFile.Substring(currentFile.Substring(0, currentFile.LastIndexOf("\\")).LastIndexOf("\\")); ;
             }
     
-            lblCurrentFile.Text = (file);
+            lblCurrentFile.Text = currentFile;
+
+                        if (tempTreeView.Nodes.Count != 0 && !tempTreeView.Nodes[0].ToString().Equals(null))
+            {
+                var ar = System.Array.CreateInstance(typeof(TreeNode), tempTreeView.Nodes.Count);
+                tempTreeView.Nodes.CopyTo(ar, 0);
+
+                foreach (TreeNode item in ar)
+                {
+                    if (item.Text != "")
+                    {
+                        resultForm.resultsTreeView.Nodes.Add((TreeNode)item.Clone());
+                    }
+                }
+                tempTreeView.Nodes.Clear();
+            }
         }
 
         /** Updates label based on the result of the scan **/
@@ -216,7 +210,7 @@ namespace DupeFinder
             {
                 lblStatus.Text = "";
                 lblCurrentFile.Text = "Canceled!";
-                ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
+                ShowResults();
             }
             else if (e.Error != null)
             {
@@ -227,7 +221,7 @@ namespace DupeFinder
             {
                 lblStatus.Text = "";
                 lblCurrentFile.Text = "Finished!";
-                ShowResults(File.ReadAllText(txtFolderPath.Text + "\\" + "results.txt"));
+                ShowResults();
             }
         }
 
@@ -245,11 +239,16 @@ namespace DupeFinder
         /** Driver function that initiates calls to the other functions **/
         private void btnCompareFiles_Click(object sender, EventArgs e)
         {
+            if (txtFolderPath.Text == "")
+            {
+                MessageBox.Show("Error: Choose a directory!", "DupeFinder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             btnCancel.Enabled = true;
             btnCompareFiles.Enabled = false;
             lblCurrentFile.Text = "";
             lblStatus.Text = "Current File:";
-            WriteHeader();
             
             if (backgroundWorker1.IsBusy != true)
             {

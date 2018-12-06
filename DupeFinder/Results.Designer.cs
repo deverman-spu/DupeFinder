@@ -28,27 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.rtbResults = new System.Windows.Forms.RichTextBox();
+            this.resultsTreeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
-            // rtbResults
+            // resultsTreeView
             // 
-            this.rtbResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbResults.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbResults.Location = new System.Drawing.Point(0, 0);
-            this.rtbResults.Name = "rtbResults";
-            this.rtbResults.ReadOnly = true;
-            this.rtbResults.Size = new System.Drawing.Size(784, 561);
-            this.rtbResults.TabIndex = 0;
-            this.rtbResults.Text = "";
-            this.rtbResults.WordWrap = false;
+            this.resultsTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultsTreeView.FullRowSelect = true;
+            this.resultsTreeView.Location = new System.Drawing.Point(0, 0);
+            this.resultsTreeView.Name = "resultsTreeView";
+            this.resultsTreeView.Size = new System.Drawing.Size(784, 561);
+            this.resultsTreeView.TabIndex = 1;
             // 
             // Results
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.rtbResults);
+            this.Controls.Add(this.resultsTreeView);
             this.Name = "Results";
             this.Text = "Results";
             this.ResumeLayout(false);
@@ -56,7 +53,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox rtbResults;
+        public System.Windows.Forms.TreeView resultsTreeView;
     }
 }

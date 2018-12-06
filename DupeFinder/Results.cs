@@ -12,22 +12,10 @@ namespace DupeFinder
 {
     public partial class Results : Form
     {
+
         public Results()
         {
             InitializeComponent();
-        }
-
-        /** Getter and setter for our results rich text box **/
-        public string RichTextBoxValue
-        {
-            get
-            {
-                return rtbResults.Text;
-            }
-            set
-            {
-                rtbResults.Text = value;
-            }
         }
     }
 }
