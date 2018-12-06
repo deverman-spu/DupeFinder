@@ -274,6 +274,7 @@ namespace DupeFinder
         /// <param name="e"> Status of background worker </param>
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            btnSelectFolder.Enabled = true;
             btnCompareFiles.Enabled = true;
             btnCancel.Enabled = false;
             chkRecursive.Enabled = true;
@@ -327,6 +328,7 @@ namespace DupeFinder
                 return;
             }
 
+            btnSelectFolder.Enabled = false;
             btnCancel.Enabled = true;
             btnCompareFiles.Enabled = false;
             chkRecursive.Enabled = false;
