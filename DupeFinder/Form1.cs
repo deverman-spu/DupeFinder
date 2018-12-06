@@ -9,12 +9,19 @@ namespace DupeFinder
 {
     public partial class Main : Form
     {
-        /** Generic list to hold all of our files with their paths **/
+        /// <summary>
+        /// Generic list to hold all of our files with their paths
+        /// </summary>
         List<string> fileList = new List<string>();
 
-        /** Create instance of our results form so we can send data to it **/
+        /// <summary>
+        /// Create instance of our results form so we can send data to it
+        /// </summary>
         Results resultForm = new Results();
 
+        /// <summary>
+        /// Initialize the main form and background worker components.
+        /// </summary>
         public Main()
         {
             InitializeComponent();
@@ -22,7 +29,11 @@ namespace DupeFinder
             backgroundWorker1.WorkerSupportsCancellation = true;
         }
 
-        /** Computes the MD5 hash of the specified file and save it in a byte array. **/
+        /// <summary>
+        /// Computes the MD5 hash of the specified file.
+        /// </summary>
+        /// <param name="file"> Filename to generate the hash for. </param>
+        /// <returns> Byte Array of the file. </returns>
         private byte[] GetMD5(string file)
         {
             MD5 hashMD5 = MD5.Create();
@@ -33,7 +44,12 @@ namespace DupeFinder
             }
         }
 
-        /** Compares the MD5 hashes of two files and return true if they are equal. **/
+        /// <summary>
+        /// Compares the MD5 hashes of two files
+        /// </summary>
+        /// <param name="file"> Filename of the first file. </param>
+        /// <param name="checkFile"> Filename of the second file. </param>
+        /// <returns> True if files are equal, false if files are not equal. </returns>
         private bool CompareMD5(string file, string checkFile)
         {
             byte[] fileMD5 = GetMD5(file);
@@ -53,7 +69,12 @@ namespace DupeFinder
             return false;
         }
 
-        /** Compares the files byte-by-byte and return true if they are equal **/
+        /// <summary>
+        /// Compares two files byte-by-byte
+        /// </summary>
+        /// <param name="file"> Filename of the first file. </param>
+        /// <param name="checkFile"> Filename of the second file. </param>
+        /// <returns> True if files are equal, false if files are not equal. </returns>
         private bool CompareBytes(string file, string checkFile)
         {
             FileInfo fileInfo = new FileInfo(file);
@@ -74,15 +95,21 @@ namespace DupeFinder
             }
             return true;
         }
-   
-        /** Populates our results form with the results from the file and shows the form **/
+
+        /// <summary>
+        /// Populates our results form with the results from the file and shows the form
+        /// </summary>
         private void ShowResults()
         {
                 resultForm.StartPosition = FormStartPosition.CenterParent;
                 resultForm.ShowDialog();
         }
 
-        /** Opens a folder browser dialog then populates our textbox with the value **/
+        /// <summary>
+        /// Opens a folder browser dialog then populates our textbox with the value
+        /// </summary>
+        /// <param name="sender"> Source of event. </param>
+        /// <param name="e"> Event data, if present. </param>
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
             lblCurrentFile.Text = "";
@@ -93,7 +120,11 @@ namespace DupeFinder
             }
         }
 
-        /** Background worker function that drives our comparisons **/
+        /// <summary>
+        /// Background worker function that drives our comparisons
+        /// </summary>
+        /// <param name="sender"> Source of event. </param>
+        /// <param name="e"> Event data, if present. </param>
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -116,7 +147,6 @@ namespace DupeFinder
                     fileList.Add(file);
                 }
             }
-
 
             totalFiles = fileList.Count;
 
@@ -173,7 +203,6 @@ namespace DupeFinder
                                     }
                                 }
                             }
-
                         }
                     }
                 }
@@ -191,7 +220,11 @@ namespace DupeFinder
             }
         }
 
-        /** Updates the progress of the scan **/
+        /// <summary>
+        /// Updates the progress of the scan
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Current progress and current file. </param>
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             this.progressBar1.Value = e.ProgressPercentage;
@@ -234,7 +267,11 @@ namespace DupeFinder
             }
         }
 
-        /** Updates label based on the result of the scan **/
+        /// <summary>
+        /// Updates label based on the result of the scan
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Status of background worker </param>
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnCompareFiles.Enabled = true;
@@ -262,7 +299,11 @@ namespace DupeFinder
             }
         }
 
-        /** Cancel the async background worker **/
+        /// <summary>
+        /// Cancel the async background worker
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Event data, if present. </param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             btnCancel.Enabled = false;
@@ -273,7 +314,11 @@ namespace DupeFinder
             }
         }
 
-        /** Driver function that initiates calls to the other functions **/
+        /// <summary>
+        /// Driver function that initiates calls to the other functions
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Event data, if present. </param>
         private void btnCompareFiles_Click(object sender, EventArgs e)
         {
             if (txtFolderPath.Text == "")
@@ -301,7 +346,11 @@ namespace DupeFinder
             }
         }
 
-        /** Exits the application **/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Event data, if present. </param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
