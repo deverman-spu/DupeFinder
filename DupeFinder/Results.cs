@@ -17,5 +17,10 @@ namespace DupeFinder
         {
             InitializeComponent();
         }
+
+        public void ClearResults()
+        {
+            resultsTreeView.Nodes.Clear();
+        }
     }
 }

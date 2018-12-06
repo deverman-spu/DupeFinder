@@ -102,10 +102,21 @@ namespace DupeFinder
             int currentFile = 1;
             fileList.Clear();
 
-            foreach (string file in Directory.EnumerateFiles(txtFolderPath.Text, "*.*", SearchOption.AllDirectories))
+            if (chkRecursive.Checked == true)
             {
-                fileList.Add(file);
+                foreach (string file in Directory.EnumerateFiles(txtFolderPath.Text, "*.*", SearchOption.AllDirectories))
+                {
+                    fileList.Add(file);
+                }
             }
+            else if (chkRecursive.Checked == false)
+            {
+                foreach (string file in Directory.EnumerateFiles(txtFolderPath.Text, "*.*", SearchOption.TopDirectoryOnly))
+                {
+                    fileList.Add(file);
+                }
+            }
+
 
             totalFiles = fileList.Count;
 
@@ -124,22 +135,45 @@ namespace DupeFinder
                     { 
                         if ((fileSize == checkFileSize) && (file.Equals(checkFile) == false))
                         {
-                            if (CompareBytes(file, checkFile) == true)
+                            if (radByHash.Checked == true)
                             {
-                                if (needParent == true)
+                                if (CompareBytes(file, checkFile) == true)
                                 {
-                                    tempTreeView.Nodes.Add(parentNode);
-                                    needParent = false;
-                                }
+                                    if (needParent == true)
+                                    {
+                                        tempTreeView.Nodes.Add(parentNode);
+                                        needParent = false;
+                                    }
 
-                                tempTreeView.SelectedNode = parentNode;
+                                    tempTreeView.SelectedNode = parentNode;
 
-                                if (tempTreeView.SelectedNode != null)
-                                {
-                                    tempTreeView.SelectedNode.Nodes.Add(childNode);
-                                    alreadyChecked.Add(checkFile);
+                                    if (tempTreeView.SelectedNode != null)
+                                    {
+                                        tempTreeView.SelectedNode.Nodes.Add(childNode);
+                                        alreadyChecked.Add(checkFile);
+                                    }
                                 }
                             }
+                            else if (radByteByByte.Checked == true)
+                            {
+                                if (CompareMD5(file, checkFile) == true)
+                                {
+                                    if (needParent == true)
+                                    {
+                                        tempTreeView.Nodes.Add(parentNode);
+                                        needParent = false;
+                                    }
+
+                                    tempTreeView.SelectedNode = parentNode;
+
+                                    if (tempTreeView.SelectedNode != null)
+                                    {
+                                        tempTreeView.SelectedNode.Nodes.Add(childNode);
+                                        alreadyChecked.Add(checkFile);
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
@@ -205,6 +239,9 @@ namespace DupeFinder
         {
             btnCompareFiles.Enabled = true;
             btnCancel.Enabled = false;
+            chkRecursive.Enabled = true;
+            radByHash.Enabled = true;
+            radByteByByte.Enabled = true;
 
             if (e.Cancelled == true)
             {
@@ -247,8 +284,16 @@ namespace DupeFinder
 
             btnCancel.Enabled = true;
             btnCompareFiles.Enabled = false;
+            chkRecursive.Enabled = false;
+            radByHash.Enabled = false;
+            radByteByByte.Enabled = false;
             lblCurrentFile.Text = "";
             lblStatus.Text = "Current File:";
+
+            if (resultForm != null)
+            {
+                resultForm.ClearResults();
+            }
             
             if (backgroundWorker1.IsBusy != true)
             {

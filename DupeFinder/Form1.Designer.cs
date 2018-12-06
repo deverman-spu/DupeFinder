@@ -43,7 +43,14 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.tempTreeView = new System.Windows.Forms.TreeView();
+            this.radByHash = new System.Windows.Forms.RadioButton();
+            this.radByteByByte = new System.Windows.Forms.RadioButton();
+            this.grpCompareMethod = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkRecursive = new System.Windows.Forms.CheckBox();
             this.mnuMain.SuspendLayout();
+            this.grpCompareMethod.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -125,7 +132,7 @@
             // 
             // lblCurrentFile
             // 
-            this.lblCurrentFile.Location = new System.Drawing.Point(15, 120);
+            this.lblCurrentFile.Location = new System.Drawing.Point(12, 211);
             this.lblCurrentFile.Name = "lblCurrentFile";
             this.lblCurrentFile.Size = new System.Drawing.Size(410, 23);
             this.lblCurrentFile.TabIndex = 4;
@@ -149,7 +156,7 @@
             // btnCancel
             // 
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(466, 120);
+            this.btnCancel.Location = new System.Drawing.Point(466, 205);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(90, 23);
             this.btnCancel.TabIndex = 6;
@@ -160,7 +167,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoEllipsis = true;
-            this.lblStatus.Location = new System.Drawing.Point(15, 90);
+            this.lblStatus.Location = new System.Drawing.Point(12, 192);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(333, 23);
             this.lblStatus.TabIndex = 7;
@@ -168,18 +175,73 @@
             // 
             // tempTreeView
             // 
-            this.tempTreeView.Location = new System.Drawing.Point(546, 194);
+            this.tempTreeView.Location = new System.Drawing.Point(574, 230);
             this.tempTreeView.Name = "tempTreeView";
             this.tempTreeView.Size = new System.Drawing.Size(10, 10);
             this.tempTreeView.TabIndex = 9;
             this.tempTreeView.TabStop = false;
             this.tempTreeView.Visible = false;
             // 
+            // radByHash
+            // 
+            this.radByHash.AutoSize = true;
+            this.radByHash.Location = new System.Drawing.Point(10, 41);
+            this.radByHash.Name = "radByHash";
+            this.radByHash.Size = new System.Drawing.Size(50, 17);
+            this.radByHash.TabIndex = 10;
+            this.radByHash.Text = "Hash";
+            this.radByHash.UseVisualStyleBackColor = true;
+            // 
+            // radByteByByte
+            // 
+            this.radByteByByte.AutoSize = true;
+            this.radByteByByte.Checked = true;
+            this.radByteByByte.Location = new System.Drawing.Point(10, 20);
+            this.radByteByByte.Name = "radByteByByte";
+            this.radByteByByte.Size = new System.Drawing.Size(84, 17);
+            this.radByteByByte.TabIndex = 11;
+            this.radByteByByte.TabStop = true;
+            this.radByteByByte.Text = "Byte-by-Byte";
+            this.radByteByByte.UseVisualStyleBackColor = true;
+            // 
+            // grpCompareMethod
+            // 
+            this.grpCompareMethod.Controls.Add(this.radByHash);
+            this.grpCompareMethod.Controls.Add(this.radByteByByte);
+            this.grpCompareMethod.Location = new System.Drawing.Point(15, 88);
+            this.grpCompareMethod.Name = "grpCompareMethod";
+            this.grpCompareMethod.Size = new System.Drawing.Size(126, 68);
+            this.grpCompareMethod.TabIndex = 12;
+            this.grpCompareMethod.TabStop = false;
+            this.grpCompareMethod.Text = "Comparison Method";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.chkRecursive);
+            this.groupBox1.Location = new System.Drawing.Point(164, 88);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(110, 49);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Include Subfolders";
+            // 
+            // chkRecursive
+            // 
+            this.chkRecursive.AutoSize = true;
+            this.chkRecursive.Location = new System.Drawing.Point(11, 20);
+            this.chkRecursive.Name = "chkRecursive";
+            this.chkRecursive.Size = new System.Drawing.Size(44, 17);
+            this.chkRecursive.TabIndex = 0;
+            this.chkRecursive.Text = "Yes";
+            this.chkRecursive.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 222);
+            this.ClientSize = new System.Drawing.Size(584, 251);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpCompareMethod);
             this.Controls.Add(this.tempTreeView);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnCancel);
@@ -195,6 +257,10 @@
             this.Text = "DupeFinder";
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
+            this.grpCompareMethod.ResumeLayout(false);
+            this.grpCompareMethod.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,6 +283,11 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.TreeView tempTreeView;
+        private System.Windows.Forms.RadioButton radByHash;
+        private System.Windows.Forms.RadioButton radByteByByte;
+        private System.Windows.Forms.GroupBox grpCompareMethod;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox chkRecursive;
     }
 }
 
