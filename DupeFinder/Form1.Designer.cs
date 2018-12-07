@@ -104,14 +104,18 @@
             // 
             // txtFolderPath
             // 
+            this.txtFolderPath.AllowDrop = true;
             this.txtFolderPath.Location = new System.Drawing.Point(15, 55);
             this.txtFolderPath.Name = "txtFolderPath";
             this.txtFolderPath.ReadOnly = true;
             this.txtFolderPath.Size = new System.Drawing.Size(410, 20);
             this.txtFolderPath.TabIndex = 1;
+            this.txtFolderPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtFolderPath_DragDrop);
+            this.txtFolderPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtFolderPath_DragEnter);
             // 
             // btnSelectFolder
             // 
+            this.btnSelectFolder.AllowDrop = true;
             this.btnSelectFolder.Location = new System.Drawing.Point(466, 55);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(90, 23);
@@ -119,6 +123,8 @@
             this.btnSelectFolder.Text = "Select Folder";
             this.btnSelectFolder.UseVisualStyleBackColor = true;
             this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            this.btnSelectFolder.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnSelectFolder_DragDrop);
+            this.btnSelectFolder.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnSelectFolder_DragEnter);
             // 
             // btnCompareFiles
             // 

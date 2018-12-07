@@ -357,5 +357,74 @@ namespace DupeFinder
         {
             System.Windows.Forms.Application.Exit();
         }
+
+        /// <summary>
+        /// Copy the data from the drag source to the target
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Event data, including folder path. </param>
+        private void txtFolderPath_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the data and places it in the correct control
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Event data, including folder path. </param>
+        private void txtFolderPath_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (Directory.Exists(files[0]))
+                {
+                    this.txtFolderPath.Text = files[0];
+                }
+            }
+        }
+        /// <summary>
+        /// Copy the data from the drag source to the target
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Event data, including folder path. </param>
+        private void btnSelectFolder_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the data and places it in the correct control
+        /// </summary>
+        /// <param name="sender"> Source of the event. </param>
+        /// <param name="e"> Event data, including folder path. </param>
+        private void btnSelectFolder_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (Directory.Exists(files[0]))
+                {
+                    this.txtFolderPath.Text = files[0];
+                }
+            }
+        }
     }
 }
