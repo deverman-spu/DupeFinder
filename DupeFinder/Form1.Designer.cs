@@ -132,7 +132,7 @@
             // 
             // lblCurrentFile
             // 
-            this.lblCurrentFile.Location = new System.Drawing.Point(12, 211);
+            this.lblCurrentFile.Location = new System.Drawing.Point(12, 218);
             this.lblCurrentFile.Name = "lblCurrentFile";
             this.lblCurrentFile.Size = new System.Drawing.Size(410, 23);
             this.lblCurrentFile.TabIndex = 4;
@@ -175,7 +175,7 @@
             // 
             // tempTreeView
             // 
-            this.tempTreeView.Location = new System.Drawing.Point(574, 230);
+            this.tempTreeView.Location = new System.Drawing.Point(574, 242);
             this.tempTreeView.Name = "tempTreeView";
             this.tempTreeView.Size = new System.Drawing.Size(10, 10);
             this.tempTreeView.TabIndex = 9;
@@ -239,7 +239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 251);
+            this.ClientSize = new System.Drawing.Size(584, 254);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grpCompareMethod);
             this.Controls.Add(this.tempTreeView);

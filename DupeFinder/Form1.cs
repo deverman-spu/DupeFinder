@@ -167,7 +167,7 @@ namespace DupeFinder
                         {
                             if (radByHash.Checked == true)
                             {
-                                if (CompareBytes(file, checkFile) == true)
+                                if (CompareMD5(file, checkFile) == true)
                                 {
                                     if (needParent == true)
                                     {
@@ -186,7 +186,7 @@ namespace DupeFinder
                             }
                             else if (radByteByByte.Checked == true)
                             {
-                                if (CompareMD5(file, checkFile) == true)
+                                if (CompareBytes(file, checkFile) == true)
                                 {
                                     if (needParent == true)
                                     {
@@ -251,7 +251,7 @@ namespace DupeFinder
     
             lblCurrentFile.Text = currentFile;
 
-                        if (tempTreeView.Nodes.Count != 0 && !tempTreeView.Nodes[0].ToString().Equals(null))
+            if (tempTreeView.Nodes.Count != 0 && !tempTreeView.Nodes[0].ToString().Equals(null))
             {
                 var ar = System.Array.CreateInstance(typeof(TreeNode), tempTreeView.Nodes.Count);
                 tempTreeView.Nodes.CopyTo(ar, 0);
