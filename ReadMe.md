@@ -4,7 +4,6 @@ DupeFinder is a Windows application that allows users to search a specified dire
 
   - Supports searching within sub-directories
   - Offers MD5 hash and byte-by-byte comparisons
-  - Magic
 
 # New Features!
 
